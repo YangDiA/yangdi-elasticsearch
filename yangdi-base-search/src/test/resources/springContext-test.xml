@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/data/elasticsearch http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="sysconfig"
+          class="com.ewandian.platform.util.resourceloader.EWandianPropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:system.properties</value>
+                <value>classpath*:es-server.properties</value>
+                <value>classpath*:mongodb.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <elasticsearch:transport-client
+        id="client"
+        cluster-name="${dev-es-cluster-1.name}"
+        cluster-nodes="${dev-es-cluster-1-node-1.ip}:${dev-es-cluster-1-node-1.port}"
+    />
+
+    <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+        <constructor-arg name="client" ref="client"/>
+    </bean>
+
+
+    <elasticsearch:repositories base-package="com.ewandian.b2b2c.search.repositories" />
+    <context:component-scan base-package="com.ewandian.b2b2c.search.service"/>
+
+
+</beans>

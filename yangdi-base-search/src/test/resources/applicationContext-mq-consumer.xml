@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="mq_consumerconfig"
+          class="com.ewandian.platform.util.resourceloader.EWandianPropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:system.properties</value>
+
+            </list>
+        </property>
+    </bean>
+
+    <bean id="kafkaConsumerFactory" class="com.ewandian.distributed.mq.kafka.KafkaConsumerFactory" destroy-method="destroy">
+        <property name="zookeeperConnect" value="${zkconnection}"></property>
+
+        <property name="consumers">
+            <list>
+
+                <!--NewsCorrelationIdHandler-->
+                <bean id="NewsCorrelationIdHandler" class="com.ewandian.b2b2c.search.service.mq.NewsCorrelationIdHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="NEWs-CORRELATION-ID"></property>
+                </bean>
+
+                <!--NewsColumnIdentifyHandler-->
+                <bean id="NewsColumnIdentifyHandler" class="com.ewandian.b2b2c.search.service.mq.NewsColumnIdentifyHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="NEWs-COLUMN-IDENTIFY"></property>
+                </bean>
+
+                <!--NewsRemoveCorrelationIdHandler-->
+                <bean id="NewsRemoveCorrelationIdHandler" class="com.ewandian.b2b2c.search.service.mq.NewsRemoveCorrelationIdHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="NEWs-REMOVE-CORRELATION-ID"></property>
+                </bean>
+
+                <!--NewsRemoveColumnIdentifyHandler-->
+                <bean id="NewsRemoveColumnIdentifyHandler" class="com.ewandian.b2b2c.search.service.mq.NewsRemoveColumnIdentifyHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="NEWs-REMOVE-COLUMN-IDENTIFY"></property>
+                </bean>
+
+                <!--NewsAddOneHandler-->
+                <bean id="NewsAddOneHandler" class="com.ewandian.b2b2c.search.service.mq.NewsAddOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="NEWs-ADD-ONE"></property>
+                </bean>
+
+                <!--NewsRemoveOneHandler-->
+                <bean id="NewsRemoveOneHandler" class="com.ewandian.b2b2c.search.service.mq.NewsRemoveOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="NEWs-REMOVE-ONE"></property>
+                </bean>
+
+                <!--NewsUpdateOneHandler-->
+                <bean id="NewsUpdateOneHandler" class="com.ewandian.b2b2c.search.service.mq.NewsUpdateOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="NEWs-UPDATE-ONE"></property>
+                </bean>
+
+                <!--AdsAddOneHandler-->
+                <bean id="AdsAddOneHandler" class="com.ewandian.b2b2c.search.service.mq.AdsAddOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="ADs-ADD-ONE"></property>
+                </bean>
+
+                <!--AdsUpdateOneHandler-->
+                <bean id="AdsUpdateOneHandler" class="com.ewandian.b2b2c.search.service.mq.AdsUpdateOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="ADs-UPDATE-ONE"></property>
+                </bean>
+
+                <!--HelpCenterAddOneHandler-->
+                <bean id="HelpCenterAddOneHandler" class="com.ewandian.b2b2c.search.service.mq.HelpCenterAddOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="HELPs-ADD-ONE"></property>
+                </bean>
+
+                <!--HelpCenterUpdateOneHandler-->
+                <bean id="HelpCenterUpdateOneHandler" class="com.ewandian.b2b2c.search.service.mq.HelpCenterUpdateOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="HELPs-UPDATE-ONE"></property>
+                </bean>
+
+                <!--BrandAddOneHandler-->
+                <bean id="BrandAddOneHandler" class="com.ewandian.b2b2c.search.service.mq.BrandAddOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="BRANDs-ADD-ONE"></property>
+                </bean>
+
+                <!--BrandRemoveOne-->
+                <bean id="BrandRemoveOneHandler" class="com.ewandian.b2b2c.search.service.mq.BrandRemoveOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="BRANDs-REMOVE-ONE"></property>
+                </bean>
+
+                <!--BrandUpdateOneHandler-->
+                <bean id="BrandUpdateOneHandler" class="com.ewandian.b2b2c.search.service.mq.BrandUpdateOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="BRANDs-UPDATE-ONE"></property>
+                </bean>
+
+                <!--GoodsAddOneHandler-->
+                <bean id="GoodsAddOneHandler" class="com.ewandian.b2b2c.search.service.mq.GoodsAddOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="GOODs-ADD-ONE"></property>
+                </bean>
+
+                <!--GoodsRemoveOneHandler-->
+                <bean id="GoodsRemoveOneHandler" class="com.ewandian.b2b2c.search.service.mq.GoodsRemoveOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="GOODs-REMOVE-ONE"></property>
+                </bean>
+
+                <!--CategoryAddOneHandler-->
+                <bean id="CategoryAddOneHandler" class="com.ewandian.b2b2c.search.service.mq.CategoryAddOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="CATEGORY-ADD-ONE"></property>
+                </bean>
+
+                <!--CategoryRemoveOneHandler-->
+                <bean id="CategoryRemoveOneHandler" class="com.ewandian.b2b2c.search.service.mq.CategoryRemoveOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="CATEGORY-REMOVE-ONE"></property>
+                </bean>
+
+                <!--CategoryUpdateOneHandler-->
+                <bean id="CategoryUpdateOneHandler" class="com.ewandian.b2b2c.search.service.mq.CategoryUpdateOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="CATEGORY-UPDATE-ONE"></property>
+                </bean>
+
+                <!--GoodsImageAddOneHandler-->
+                <bean id="GoodsImageAddOneHandler" class="com.ewandian.b2b2c.search.service.mq.GoodsImageAddOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="GOODS-IMAGE-ADD-ONE"></property>
+                </bean>
+
+                <!--GoodsImageRemoveOneHandler-->
+                <bean id="GoodsImageRemoveOneHandler" class="com.ewandian.b2b2c.search.service.mq.GoodsImageRemoveOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="GOODS-IMAGE-REMOVE-ONE"></property>
+                </bean>
+
+                <!--GoodsImageUpdateOneHandler-->
+                <bean id="GoodsImageUpdateOneHandler" class="com.ewandian.b2b2c.search.service.mq.GoodsImageUpdateOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="GOODS-IMAGE-UPDATE-ONE"></property>
+                </bean>
+
+                <!--ShopAddOneHandler-->
+                <bean id="ShopAddOneHandler" class="com.ewandian.b2b2c.search.service.mq.ShopAddOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="SHOP-ADD-ONE"></property>
+                </bean>
+
+                <!--ShopRemoveOneHandler-->
+                <bean id="ShopRemoveOneHandler" class="com.ewandian.b2b2c.search.service.mq.ShopRemoveOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="SHOP-REMOVE-ONE"></property>
+                </bean>
+
+                <!--ShopUpdateOneHandler-->
+                <bean id="ShopUpdateOneHandler" class="com.ewandian.b2b2c.search.service.mq.ShopUpdateOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="SHOP-UPDATE-ONE"></property>
+                </bean>
+
+                <!--ShopOverAllRatingAddOneHandler-->
+                <bean id="ShopOverAllRatingAddOneHandler" class="com.ewandian.b2b2c.search.service.mq.ShopOverAllRatingAddOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="SHOP-OVERALL-RATING-ADD-ONE"></property>
+                </bean>
+
+                <!--ShopOverAllRatingRemoveOneHandler-->
+                <bean id="ShopOverAllRatingRemoveOneHandler" class="com.ewandian.b2b2c.search.service.mq.ShopOverAllRatingRemoveOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="SHOP-OVERALL-RATING-REMOVE-ONE"></property>
+                </bean>
+
+                <!--ShopOverAllRatingUpdateOneHandler-->
+                <bean id="ShopOverAllRatingUpdateOneHandler" class="com.ewandian.b2b2c.search.service.mq.ShopOverAllRatingUpdateOneHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="SHOP-OVERALL-RATING-UPDATE-ONE"></property>
+                </bean>
+
+                <!--AddCommentNumToGoods-->
+                <bean id="AddCommentNumToGoods" class="com.ewandian.b2b2c.search.service.mq.AddCommentNumToGoodsHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="GOODs-ADD-COMMENT_NUM"></property>
+                </bean>
+
+                <!--AddSaleVolumeToGoods-->
+                <bean id="AddSaleVolumeToGoods" class="com.ewandian.b2b2c.search.service.mq.AddSaleVolumeToGoodsHandler">
+                    <property name="groupId" value="ewandian-search"></property>
+                    <property name="topic" value="GOODs-ADD-SALE_VOLUME"></property>
+                </bean>
+
+            </list>
+        </property>
+    </bean>
+</beans>

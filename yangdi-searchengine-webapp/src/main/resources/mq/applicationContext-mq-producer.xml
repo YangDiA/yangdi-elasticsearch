@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+     http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+      http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-4.0.xsd   ">
+	<bean id="mq_providerconfig"
+		  class="com.ewandian.platform.util.resourceloader.EWandianPropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:system.properties</value>
+
+			</list>
+		</property>
+	</bean>
+	<bean id="config" class="kafka.producer.ProducerConfig">
+
+
+		<constructor-arg name="originalProps">
+			<props>
+				<prop key="metadata.broker.list">${brokerlist}</prop>
+				<prop key="serializer.class">kafka.serializer.StringEncoder</prop>
+				<prop key="request.required.acks">1</prop>
+			</props>
+		</constructor-arg>
+	</bean>
+	<bean id="kafkaJmsTemplate" class="com.ewandian.distributed.mq.kafka.KafkaJmsTemplate" destroy-method="close">
+		<property name="config" ref="config">
+
+
+		</property>
+	</bean>
+
+</beans>

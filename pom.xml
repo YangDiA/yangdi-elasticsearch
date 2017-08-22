@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>yangdi-elasticsearch</groupId>
+    <artifactId>yangdi-searchengine</artifactId>
+    <packaging>pom</packaging>
+    <name> search engine parent</name>
+    <version>1.0.0</version>
+
+    <modules>
+        <module>yangdi-base-search</module>
+        <module>yangdi-searchengine-webapp</module>
+    </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <verbose>true</verbose>
+                    <fork>true</fork>
+                    <executable>${JAVA_HOME}/bin/javac</executable>
+                    <compilerVersion>1.8</compilerVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.4.2</version>
+                <configuration>
+                    <jvm>${JAVA_HOME}/bin/java</jvm>
+                    <forkMode>once</forkMode>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*IT.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.3.1</version>
+                <inherited>true</inherited>
+                <executions>
+                    <execution>
+                        <id>enforce</id>
+                        <configuration>
+                            <rules>
+                                <DependencyConvergence/>
+                                <requireJavaVersion>
+                                    <version>1.8</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>test</id>
+            <!--developer送测版-->
+
+            <build>
+                <resources>
+
+
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                    <resource>
+                        <directory>src/main/config/test</directory>
+                        <filtering>true</filtering>
+                    </resource>
+
+
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.6</version>
+
+                        <configuration>
+                            <warName>${project.artifactId}-${project.version}</warName>
+                            <classifier>test</classifier>
+                            <!--<webXml>src/main/web/test/web.xml</webXml>
+                            <warSourceExcludes>src/main/resources/overlay/**</warSourceExcludes>-->
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <!--developer local版-->
+
+            <build>
+                <resources>
+
+
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                    <resource>
+                        <directory>src/main/config/dev</directory>
+                        <filtering>true</filtering>
+                    </resource>
+
+
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.6</version>
+
+                        <configuration>
+                            <warName>${project.artifactId}-${project.version}</warName>
+                            <classifier>dev</classifier>
+                            <!--<webXml>src/main/web/dev/web.xml</webXml>
+                            <warSourceExcludes>src/main/resources/overlay/**</warSourceExcludes>-->
+
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>rc</id>
+            <!--生产机发布版-->
+
+            <build>
+                <resources>
+
+
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                    <resource>
+                        <directory>src/main/config/rc</directory>
+                        <filtering>true</filtering>
+                    </resource>
+
+
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.6</version>
+
+                        <configuration>
+                            <warName>${project.artifactId}-${project.version}</warName>
+                            <classifier>rc</classifier>
+                           <!-- <webXml>src/main/web/rc/web.xml</webXml>
+                            <warSourceExcludes>src/main/resources/overlay/**</warSourceExcludes>-->
+
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>rctest</id>
+            <!--UAT发布版-->
+            <build>
+                <resources>
+
+
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                    <resource>
+                        <directory>src/main/config/rctest</directory>
+                        <filtering>true</filtering>
+                    </resource>
+
+
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.6</version>
+
+                        <configuration>
+                            <warName>${project.artifactId}-${project.version}</warName>
+                            <classifier>rctest</classifier>
+                            <!--<webXml>src/main/web/rctest/web.xml</webXml>
+                            <warSourceExcludes>src/main/resources/overlay/**</warSourceExcludes>-->
+
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+    </profiles>
+</project>
